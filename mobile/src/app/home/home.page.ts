@@ -1,5 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommunicationService } from '../services/communication.service';
+import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
 
 @Component({
   selector: 'app-home',
@@ -20,7 +21,9 @@ export class HomePage implements OnInit {
   screen_width = 0;
   screen_height = 0;
 
-  constructor(private communicationDataService: CommunicationService) {}
+  constructor(private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+  }
 
   ngOnInit() {
     this.start_realtime_communication();

@@ -65,7 +65,7 @@ async function screen_catpure() {
         io.emit('screen', {image: data, width: width, height: height});
       });
     });
-    await sleep(200);
+    await sleep(500);
   }
 }
 
@@ -114,12 +114,12 @@ const at_start = () => {
   screen_catpure();
 
   io.on('connect', (socket) => {
-    show_notification('Conexión','info','Dispositivo ' + socket.id + ' conectado');
+    //show_notification('Conexión','info','Dispositivo ' + socket.id + ' conectado');
   });
 
   io.on('connection', socket => {
     socket.on('disconnect', () => {
-      show_notification('Conexión','info','Dispositivo ' + socket.id + ' desconectado');
+      //show_notification('Conexión','info','Dispositivo ' + socket.id + ' desconectado');
     });
     socket.on('message', payload => {
         process_message(payload.message);
