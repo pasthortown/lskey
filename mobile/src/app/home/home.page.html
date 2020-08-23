@@ -61,12 +61,12 @@
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['ampersand'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('&')">
           &
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_two_backslash()">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('\\\\')">
           \\
         </ion-button>
       </ion-col>
@@ -106,7 +106,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['subtract'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('-')">
           -
         </ion-button>
       </ion-col>
@@ -128,7 +128,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['add'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('+')">
           +
         </ion-button>
       </ion-col>
@@ -150,7 +150,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['asterisk'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('*')">
           *
         </ion-button>
       </ion-col>
@@ -162,17 +162,17 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['decimal'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('.')">
           .
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['comma'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text(',')">
           ,
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['slash'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('/')">
           /
         </ion-button>
       </ion-col>

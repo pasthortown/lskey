@@ -91,17 +91,18 @@ function process_message(message) {
   if (message.type == 'keyboard') {
     send_keyboard(message.order, message.combination);
   }
-  if (message.type == 'backslash') {
-    escribir_backslash();
+  if (message.type == 'keyboard_special') {
+    escribir_especial(message.order);
   }
 }
 
-function escribir_backslash() {
-  robot.typeString('\\\\');
+function escribir_especial(order) {
+  robot.typeString(order);
 }
 
 const at_start = () => {
   robot.setMouseDelay(2);
+  robot.setKeyboardDelay(2);
   tray = new Tray(icon_path);
   const context_menu = Menu.buildFromTemplate(template_menu);
   tray.setContextMenu(context_menu);
