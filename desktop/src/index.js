@@ -42,7 +42,7 @@ function show_notification(title, type, content) {
 
 function send_mouse(buttons, x, y) {
   if (x !== -1 && y !== -1) {
-    robot.moveMouse(x, y);
+    robot.moveMouseSmooth(x, y);
   }
   if (buttons[0] == '1') {
     robot.mouseClick('left');
@@ -91,6 +91,13 @@ function process_message(message) {
   if (message.type == 'keyboard') {
     send_keyboard(message.order, message.combination);
   }
+  if (message.type == 'backslash') {
+    escribir_backslash();
+  }
+}
+
+function escribir_backslash() {
+  robot.typeString('\\\\');
 }
 
 const at_start = () => {

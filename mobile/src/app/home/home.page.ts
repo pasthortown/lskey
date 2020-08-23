@@ -108,6 +108,15 @@ export class HomePage implements OnInit {
     this.sendData(payload);
   }
 
+  send_two_backslash() {
+    let message = {
+      type: "backslash", 
+      order: "",
+      combination: false};
+    let payload = {to: "message", message: message}; 
+    this.sendData(payload);
+  }
+
   send_key_sequence(order) {
     let message = {
       type: "keyboard", 

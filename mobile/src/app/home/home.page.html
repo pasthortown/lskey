@@ -61,31 +61,31 @@
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['&'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['ampersand'])">
           &
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['\\','\\'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_two_backslash()">
           \\
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
-      <ion-col size="10">
+      <ion-col size="12">
         <ion-button expand="full" color="secondary" size="large" (click)="show_mouse = !show_mouse">
           <i class="fas fa-mouse" *ngIf="!show_mouse"></i>
           <i class="fas fa-keyboard" *ngIf="show_mouse"></i>
         </ion-button>
       </ion-col>
-      <ion-col size="2">
+      <!-- <ion-col size="2">
         <ion-button expand="full" color="success" size="large" *ngIf="!mic_on" (click)="change_mic()">
           <i class="fas fa-microphone"></i>
         </ion-button>
         <ion-button expand="full" color="danger" size="large" *ngIf="mic_on" (click)="change_mic()">
           <i class="fas fa-microphone-slash" ></i>
         </ion-button>
-      </ion-col>
+      </ion-col> -->
     </ion-row>
   </ion-grid>
   <ion-grid *ngIf="!show_mouse">
@@ -106,7 +106,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['-'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['subtract'])">
           -
         </ion-button>
       </ion-col>
@@ -128,7 +128,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['+'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['add'])">
           +
         </ion-button>
       </ion-col>
@@ -150,7 +150,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['*'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['asterisk'])">
           *
         </ion-button>
       </ion-col>
@@ -162,17 +162,17 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['.'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['decimal'])">
           .
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence([','])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['comma'])">
           ,
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['/'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['slash'])">
           /
         </ion-button>
       </ion-col>
