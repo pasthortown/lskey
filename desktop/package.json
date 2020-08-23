@@ -50,7 +50,8 @@
     "express": "^4.17.1",
     "jimp": "^0.16.0",
     "robotjs": "^0.6.0",
-    "socket.io": "^2.3.0"
+    "socket.io": "^2.3.0",
+    "node-key-sender": "^1.0.11"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.52",
@@ -59,7 +60,6 @@
     "@electron-forge/maker-squirrel": "^6.0.0-beta.52",
     "@electron-forge/maker-zip": "^6.0.0-beta.52",
     "electron": "9.2.1",
-    "electron-rebuild": "^2.0.0",
-    "node-key-sender": "^1.0.11"
+    "electron-rebuild": "^2.0.0"
   }
 }
