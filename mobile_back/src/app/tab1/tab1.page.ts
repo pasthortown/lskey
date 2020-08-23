@@ -63,7 +63,7 @@ export class Tab1Page implements OnInit {
   }
 
   save_green() {
-    this.send_key_combination(["alt","f","s"]);
+    this.send_key_sequence(["alt","f","s"]);
   }
 
   save_yellow() {
