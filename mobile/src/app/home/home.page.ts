@@ -20,6 +20,8 @@ export class HomePage implements OnInit {
   pos_y = 0;
   screen_width = 0;
   screen_height = 0;
+  image_width = 0;
+  image_height = 0;
 
   constructor(private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
@@ -47,44 +49,48 @@ export class HomePage implements OnInit {
   }
 
   movedTouch(event) {
+    this.image_width = this.screen_capture.nativeElement.width;
+    this.image_height = this.screen_capture.nativeElement.height;
     this.pos_x = event.touches[0].pageX - 10;
-    this.pos_y = event.touches[0].pageY - 67;
+    this.pos_y = event.touches[0].pageY - 276;
     if (this.pos_x < 0) {
       this.pos_x = 0;
     }
-    if (this.pos_x > this.screen_width) {
-      this.pos_x = this.screen_width;
+    if (this.pos_x > this.image_width) {
+      this.pos_x = this.image_width;
     }
     if (this.pos_y < 0) {
       this.pos_y = 0;
     }
-    if (this.pos_y > this.screen_height) {
-      this.pos_y = this.screen_height;
+    if (this.pos_y > this.image_height) {
+      this.pos_y = this.image_height;
     }
   }
 
   pixelSelected(event) {
+    this.image_width = this.screen_capture.nativeElement.width;
+    this.image_height = this.screen_capture.nativeElement.height;
     this.pos_x = event.pageX - 10;
-    this.pos_y = event.pageY - 67;
+    this.pos_y = event.pageY - 276;
     if (this.pos_x < 0) {
       this.pos_x = 0;
     }
-    if (this.pos_x > this.screen_width) {
-      this.pos_x = this.screen_width;
+    if (this.pos_x > this.image_width) {
+      this.pos_x = this.image_width;
     }
     if (this.pos_y < 0) {
       this.pos_y = 0;
     }
-    if (this.pos_y > this.screen_height) {
-      this.pos_y = this.screen_height;
+    if (this.pos_y > this.image_height) {
+      this.pos_y = this.image_height;
     }
   }
 
   endSelected() {
-    const current_width = this.screen_capture.nativeElement.width;
-    const current_height = this.screen_capture.nativeElement.height;
-    const x_to_send = this.pos_x * this.screen_width / current_width;
-    const y_to_send = this.pos_y * this.screen_height / current_height;
+    this.image_width = this.screen_capture.nativeElement.width;
+    this.image_height = this.screen_capture.nativeElement.height;
+    const x_to_send = this.pos_x * this.screen_width / this.image_width;
+    const y_to_send = this.pos_y * this.screen_height / this.image_height;
     if (this.click_lock) {
       this.send_mouse_order("100", x_to_send, y_to_send);
     } else {
