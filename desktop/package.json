@@ -1,8 +1,8 @@
 {
-  "name": "desktop",
-  "productName": "desktop",
+  "name": "lskey",
+  "productName": "LSKey",
   "version": "1.0.0",
-  "description": "My Electron application description",
+  "description": "Aplicativo para envio de señales de control desde un dispositivo externo",
   "main": "src/index.js",
   "scripts": {
     "start": "electron-forge start",
@@ -15,7 +15,7 @@
   "keywords": [],
   "author": {
     "name": "Luis Alfonso Salazar Vaca",
-    "email": "luis.salazar@turismo.gob.ec"
+    "email": "luissalazarvaca1986@gmail.com"
   },
   "license": "MIT",
   "config": {
@@ -25,7 +25,7 @@
         {
           "name": "@electron-forge/maker-squirrel",
           "config": {
-            "name": "desktop"
+            "name": "lskey"
           }
         },
         {

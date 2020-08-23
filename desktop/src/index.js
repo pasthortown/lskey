@@ -5,7 +5,6 @@ const path = require('path');
 const Tray = electron.Tray;
 const icon_path = path.join(__dirname, '/assets/images/lskeyapp.ico');
 const Menu = electron.Menu;
-const spawn = require('child_process').spawn;
 const Jimp = require('jimp');
 const express = require('express')();
 const http = require('http').Server(express);
@@ -42,6 +41,9 @@ function show_notification(title, type, content) {
 }
 
 function send_mouse(buttons, x, y) {
+  if (x !== -1 && y !== -1) {
+    robot.moveMouse(x, y);
+  }
   if (buttons[0] == '1') {
     robot.mouseClick('left');
   }
@@ -50,9 +52,6 @@ function send_mouse(buttons, x, y) {
   }
   if (buttons[2] == '1') {
     robot.mouseClick('right');
-  }
-  if (x !== -1 && y !== -1) {
-    robot.moveMouse(x, y);
   }
 }
 
