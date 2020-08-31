@@ -9,6 +9,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,6 +19,7 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
     StatusBar,
     ScreenOrientation,
     SplashScreen,
+    SpeechRecognition,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

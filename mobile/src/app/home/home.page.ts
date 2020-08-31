@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommunicationService } from '../services/communication.service';
 import { ScreenOrientation } from '@ionic-native/screen-orientation/ngx';
+import { SpeechRecognition } from '@ionic-native/speech-recognition/ngx';
 
 @Component({
   selector: 'app-home',
@@ -23,7 +24,7 @@ export class HomePage implements OnInit {
   image_width = 0;
   image_height = 0;
 
-  constructor(private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
+  constructor(private speechRecognition: SpeechRecognition, private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
   }
 
@@ -37,6 +38,22 @@ export class HomePage implements OnInit {
 
   change_mic() {
     this.mic_on = !this.mic_on;
+    if (this.mic_on) {
+      this.speechRecognition.startListening().subscribe(
+        (matches: string[]) => {
+          let toSend = '';
+          matches.forEach(element => {
+            toSend = toSend + element + ' ';
+          });
+          this.send_text(toSend);
+        },
+        (onerror) => {
+          //ignored
+        }
+      );
+    } else {
+      this.speechRecognition.stopListening();
+    }
   }
 
   start_realtime_communication() {
