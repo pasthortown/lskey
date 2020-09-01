@@ -25,7 +25,25 @@ export class HomePage implements OnInit {
   image_height = 0;
 
   constructor(private speechRecognition: SpeechRecognition, private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
-    //this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
+    this.checkPermission();
+  }
+
+  checkPermission() {
+    this.speechRecognition.hasPermission().then((permission)=>{
+      if(!permission){
+        this.requestPermission();
+      }
+    }, (err)=>{
+      //ignored
+    });
+  }
+
+  requestPermission(){
+    this.speechRecognition.requestPermission().then((data)=>{
+    }, (err)=>{
+      //ignored
+    });
   }
 
   ngOnInit() {
@@ -36,16 +54,20 @@ export class HomePage implements OnInit {
     this.communicationDataService.disconnect();
   }
 
-  change_mic() {
-    this.mic_on = !this.mic_on;
+  start_listening() {
+    const options = {
+      language: "es-ES",
+      showPartial: true,
+      showPopup: false,
+    };
     if (this.mic_on) {
-      this.speechRecognition.startListening().subscribe(
+      this.speechRecognition.startListening(options).subscribe(
         (matches: string[]) => {
-          let toSend = '';
           matches.forEach(element => {
-            toSend = toSend + element + ' ';
+            this.send_text(element);
+            this.speechRecognition.stopListening();
+            this.mic_on = false;
           });
-          this.send_text(toSend);
         },
         (onerror) => {
           //ignored
@@ -54,6 +76,11 @@ export class HomePage implements OnInit {
     } else {
       this.speechRecognition.stopListening();
     }
+  }
+  
+  change_mic() {
+    this.mic_on = !this.mic_on;
+    this.start_listening();
   }
 
   start_realtime_communication() {

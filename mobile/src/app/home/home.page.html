@@ -79,10 +79,10 @@
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="success" size="large" *ngIf="!mic_on" (click)="change_mic()">
+        <ion-button expand="full" color="success" size="large" *ngIf="mic_on" (click)="change_mic()">
           <i class="fas fa-microphone"></i>
         </ion-button>
-        <ion-button expand="full" color="danger" size="large" *ngIf="mic_on" (click)="change_mic()">
+        <ion-button expand="full" color="danger" size="large" *ngIf="!mic_on" (click)="change_mic()">
           <i class="fas fa-microphone-slash" ></i>
         </ion-button>
       </ion-col>
