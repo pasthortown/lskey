@@ -7,7 +7,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="6">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['context_menu'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['apps'])">
           <i class="fas fa-bars"></i>
         </ion-button>
       </ion-col>
@@ -24,29 +24,29 @@
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="4">
-        <ion-button expand="full" color="secondary" size="large" (click)="send_key_combination(['control', 'shift', 'home'])">
-          <i class="fas fa-step-backward"></i>
+        <ion-button expand="full" color="secondary" size="large" (click)="send_key_sequence(['prntscrn'])">
+          <i class="fas fa-desktop"></i>
         </ion-button>
       </ion-col>
       <ion-col size="4">
-        <ion-button expand="full" color="secondary" size="large" (click)="send_key_combination(['control', 'shift', 'end'])">
-          <i class="fas fa-step-forward"></i>
+        <ion-button expand="full" color="secondary" size="large" (click)="send_key_combination(['alt', 'prntscrn'])">
+          <i class="far fa-window-maximize"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_combination(['control', 'c'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_combination(['ctrl', 'c'])">
           <i class="far fa-copy"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_combination(['control', 'v'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_combination(['ctrl', 'v'])">
           <i class="fas fa-paste"></i>
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="4">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['enter'])">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['return'])">
           Enter
         </ion-button>
       </ion-col>
@@ -73,7 +73,7 @@
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="10">
-        <ion-button expand="full" color="secondary" size="large" (click)="show_mouse = !show_mouse">
+        <ion-button expand="full" color="secondary" size="large" (click)="shitch_mouse()">
           <i class="fas fa-mouse" *ngIf="!show_mouse"></i>
           <i class="fas fa-keyboard" *ngIf="show_mouse"></i>
         </ion-button>
@@ -128,7 +128,7 @@
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('+')">
+        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['add'])">
           +
         </ion-button>
       </ion-col>

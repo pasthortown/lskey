@@ -57,8 +57,8 @@ export class HomePage implements OnInit {
   start_listening() {
     const options = {
       language: "es-ES",
-      showPartial: true,
-      showPopup: false,
+      //showPartial: true,
+      //showPopup: false,
     };
     if (this.mic_on) {
       this.speechRecognition.startListening(options).subscribe(
@@ -86,10 +86,31 @@ export class HomePage implements OnInit {
   start_realtime_communication() {
     this.communicationDataService.connect();
     this.communicationDataService.listen('screen').subscribe( r => {
-      this.image_data =  r.image;
-      this.screen_width = r.width;
-      this.screen_height = r.height;
+      const response = JSON.parse(r);
+      this.image_data =  "data:image/png;base64," + response.data;
+      this.screen_width = response.width;
+      this.screen_height = response.height;
     });
+  }
+
+  shitch_mouse() {
+    this.show_mouse = !this.show_mouse;
+    if (this.show_mouse) {
+      this.request_screen();
+    }
+  }
+
+  request_screen() {
+    if (this.show_mouse) {
+      let message = {
+        type: "screen"
+      };
+      let payload = {to: "message", message: message}; 
+      this.sendData(payload);
+      setTimeout(() => {
+        this.request_screen();
+      }, 2000);
+    }
   }
 
   movedTouch(event) {
