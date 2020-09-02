@@ -63,15 +63,9 @@ export class HomePage implements OnInit {
     if (this.mic_on) {
       this.speechRecognition.startListening(options).subscribe(
         (matches: string[]) => {
-          let sended = false
-          matches.forEach(element => {
-            if (!sended) {
-              this.send_text(element);
-              this.speechRecognition.stopListening();
-              this.mic_on = false;
-              sended = true;
-            }
-          });
+          this.send_text(matches[0]);
+          this.speechRecognition.stopListening();
+          this.mic_on = false;
         },
         (onerror) => {
           //ignored

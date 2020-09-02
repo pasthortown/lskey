@@ -8,7 +8,6 @@ import pyautogui
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
 socketio = SocketIO(app, cors_allowed_origins="*")
-print(pyautogui.KEYBOARD_KEYS)
 
 @socketio.on('message')
 def handle_message(msg):
