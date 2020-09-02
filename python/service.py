@@ -4,6 +4,7 @@ import base64
 import simplejson as json
 import time
 import pyautogui
+import pyperclip
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'mysecret'
@@ -22,7 +23,8 @@ def process_message(msg):
         send_mouse(buttons, x, y)
     if order_type == "keyboard_special":
         text = msg["order"]
-        pyautogui.write(text)
+        pyperclip.copy(text)
+        pyautogui.hotKey('ctrl','v')
     if order_type == "screen":
         screen_capture()
     if order_type == "keyboard":
