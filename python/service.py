@@ -24,7 +24,7 @@ def process_message(msg):
     if order_type == "keyboard_special":
         text = msg["order"]
         pyperclip.copy(text)
-        pyautogui.hotKey('ctrl','v')
+        pyautogui.hotkey('ctrl','v')
     if order_type == "screen":
         screen_capture()
     if order_type == "keyboard":
