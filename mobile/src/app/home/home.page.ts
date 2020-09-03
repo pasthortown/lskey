@@ -25,6 +25,7 @@ export class HomePage implements OnInit {
   image_height = 0;
   ip_server = "192.168.1.23";
   connected = false;
+  scrolling = false;
 
   constructor(private speechRecognition: SpeechRecognition, private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
@@ -169,7 +170,10 @@ export class HomePage implements OnInit {
     this.communicationDataService.send('message', payload);
   }
 
-  scroll(direction) {
+  scroll(direction, start) {
+    if (start == true) {
+      this.scrolling = true;
+    }
     let message = {
       type: "scroll", 
       order: {
@@ -177,6 +181,11 @@ export class HomePage implements OnInit {
       }};
     let payload = {to: "message", message: message}; 
     this.sendData(payload);
+    if (this.scrolling) {
+      setTimeout(() => {
+        this.scroll(direction, false)
+      }, 200);
+    }
   }
 
   send_mouse_order(buttons, x, y) {
