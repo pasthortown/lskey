@@ -37,9 +37,9 @@ def process_message(msg):
 
 def move_scroll(direction):
     if (direction == 'up'):
-        pyautogui.scroll(10)
+        pyautogui.scroll(50)
     else:
-        pyautogui.scroll(-10)
+        pyautogui.scroll(-50)
 
 def send_mouse(buttons, x, y):
     if (x != -1 and y != -1):
