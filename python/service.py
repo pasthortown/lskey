@@ -21,6 +21,9 @@ def process_message(msg):
         x = msg["order"]["x"]
         y = msg["order"]["y"]
         send_mouse(buttons, x, y)
+    if order_type == "scroll":
+        direction = msg["order"]["direction"]
+        move_scroll(direction)
     if order_type == "keyboard_special":
         text = msg["order"]
         pyperclip.copy(text)
@@ -31,6 +34,12 @@ def process_message(msg):
         keys = msg["order"]
         combination = msg["combination"]
         send_keyboard(keys, combination)
+
+def move_scroll(direction):
+    if (direction == 'up'):
+        pyautogui.scroll(10)
+    else:
+        pyautogui.scroll(-10)
 
 def send_mouse(buttons, x, y):
     if (x != -1 and y != -1):
