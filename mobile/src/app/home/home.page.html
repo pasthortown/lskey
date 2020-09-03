@@ -1,93 +1,101 @@
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row style="text-align: center;">
+      <ion-col size="10">
+        <ion-item>
+          <ion-label position="floating">IP DEL SERVIDOR</ion-label>
+        <ion-input [(ngModel)]="ip_server"></ion-input>
+        </ion-item>
+      </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="danger" size="large" (click)="send_key_sequence(['escape'])">
+        <ion-button [disabled]="ip_server == ''" expand="full" color="success" size="large" (click)="start_realtime_communication()">
+          <i class="fas fa-sync-alt"></i>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row style="text-align: center;">
+      <ion-col size="2">
+        <ion-button [disabled]="!connected" expand="full" color="danger" size="large" (click)="send_key_sequence(['escape'])">
           <i class="fas fa-times"></i>
         </ion-button>
       </ion-col>
       <ion-col size="4">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['apps'])">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_key_sequence(['apps'])">
           <i class="fas fa-bars"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="medium" size="large" (click)="send_key_sequence(['up'])">
+        <ion-button [disabled]="!connected" expand="full" color="medium" size="large" (click)="scroll('up')">
           <i class="fas fa-chevron-up"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="medium" size="large" (click)="send_key_sequence(['down'])">
+        <ion-button [disabled]="!connected" expand="full" color="medium" size="large" (click)="scroll('down')">
           <i class="fas fa-chevron-down"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['backspace'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['backspace'])">
           <i class="fas fa-long-arrow-alt-left"></i>
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="4">
-        <ion-button expand="full" color="secondary" size="large" (click)="send_key_sequence(['prntscrn'])">
+        <ion-button [disabled]="!connected" expand="full" color="secondary" size="large" (click)="send_key_sequence(['prntscrn'])">
           <i class="fas fa-desktop"></i>
         </ion-button>
       </ion-col>
       <ion-col size="4">
-        <ion-button expand="full" color="secondary" size="large" (click)="send_key_combination(['alt', 'prntscrn'])">
+        <ion-button [disabled]="!connected" expand="full" color="secondary" size="large" (click)="send_key_combination(['alt', 'prntscrn'])">
           <i class="far fa-window-maximize"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_combination(['ctrl', 'c'])">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_key_combination(['ctrl', 'c'])">
           <i class="far fa-copy"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_combination(['ctrl', 'v'])">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_key_combination(['ctrl', 'v'])">
           <i class="fas fa-paste"></i>
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
-      <ion-col size="4">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['return'])">
+      <ion-col size="3">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_key_sequence(['return'])">
           Enter
         </ion-button>
       </ion-col>
-      <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['space'])">
+      <ion-col size="3">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_key_sequence(['space'])">
           <i class="fas fa-grip-lines"></i>
         </ion-button>
       </ion-col>
-      <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_key_sequence(['tab'])">
-          <i class="fas fa-long-arrow-alt-right"></i>
+      <ion-col size="3">
+        <ion-button [disabled]="!connected" expand="full" color="warning" size="large" (click)="send_key_sequence(['del'])">
+          <i class="fas fa-trash"></i>
         </ion-button>
       </ion-col>
-      <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('&')">
-          &
-        </ion-button>
-      </ion-col>
-      <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('\\\\')">
-          \\
+      <ion-col size="3">
+        <ion-button [disabled]="!connected" expand="full" color="danger" size="large" (click)="send_key_combination(['shift','del'])">
+          <i class="fas fa-dumpster"></i>
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="10">
-        <ion-button expand="full" color="secondary" size="large" (click)="shitch_mouse()">
+        <ion-button [disabled]="!connected" expand="full" color="secondary" size="large" (click)="shitch_mouse()">
           <i class="fas fa-mouse" *ngIf="!show_mouse"></i>
           <i class="fas fa-keyboard" *ngIf="show_mouse"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="success" size="large" *ngIf="mic_on" (click)="change_mic()">
+        <ion-button [disabled]="!connected" expand="full" color="success" size="large" *ngIf="mic_on" (click)="change_mic()">
           <i class="fas fa-microphone"></i>
         </ion-button>
-        <ion-button expand="full" color="danger" size="large" *ngIf="!mic_on" (click)="change_mic()">
+        <ion-button [disabled]="!connected" expand="full" color="danger" size="large" *ngIf="!mic_on" (click)="change_mic()">
           <i class="fas fa-microphone-slash" ></i>
         </ion-button>
       </ion-col>
@@ -96,88 +104,88 @@
   <ion-grid *ngIf="!show_mouse">
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['7'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['7'])">
           7
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['8'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['8'])">
           8
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['9'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['9'])">
           9
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('-')">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_text('-')">
           -
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['4'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['4'])">
           4
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['5'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['5'])">
           5
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['6'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['6'])">
           6
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('+')">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_text('+')">
           +
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['1'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['1'])">
           1
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['2'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['2'])">
           2
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['3'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['3'])">
           3
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('*')">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_text('*')">
           *
         </ion-button>
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="3">
-        <ion-button expand="full" color="dark" size="large" (click)="send_key_sequence(['0'])">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="send_key_sequence(['0'])">
           0
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('.')">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_text('.')">
           .
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text(',')">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_text(',')">
           ,
         </ion-button>
       </ion-col>
       <ion-col size="3">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_text('/')">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_text('/')">
           /
         </ion-button>
       </ion-col>
@@ -199,25 +207,25 @@
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -10px;">
       <ion-col size="4">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_mouse_order('100', -1, -1)">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_mouse_order('100', -1, -1)">
           <i class="fas fa-angle-double-left"></i>
           <i class="fas fa-mouse"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_mouse_order('010', -1, -1)">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_mouse_order('010', -1, -1)">
           <i class="fas fa-angle-double-up"></i>
           <i class="fas fa-angle-double-down"></i>
         </ion-button>
       </ion-col>
       <ion-col size="4">
-        <ion-button expand="full" color="tertiary" size="large" (click)="send_mouse_order('001', -1, -1)">
+        <ion-button [disabled]="!connected" expand="full" color="tertiary" size="large" (click)="send_mouse_order('001', -1, -1)">
           <i class="fas fa-mouse"></i>
           <i class="fas fa-angle-double-right"></i>
         </ion-button>
       </ion-col>
       <ion-col size="2">
-        <ion-button expand="full" color="dark" size="large" (click)="click_lock = !click_lock">
+        <ion-button [disabled]="!connected" expand="full" color="dark" size="large" (click)="click_lock = !click_lock">
           <i class="fas fa-lock" *ngIf="click_lock"></i>
           <i class="fas fa-lock-open" *ngIf="!click_lock"></i>
         </ion-button>

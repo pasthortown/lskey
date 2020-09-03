@@ -8,18 +8,19 @@ import { Observable } from 'rxjs';
 })
 export class CommunicationService {
 
-   url = environment.server_url;
-   private socket;
+   private socket = null;
 
    constructor() {
    }
 
-   connect() {
-      this.socket = io.connect(this.url);
+   connect(ip_server) {
+      this.socket = io.connect('http://' + ip_server + ':6400/');
    }
 
    disconnect() {
-      this.socket.io.disconnect();
+      if (this.socket != null) {
+         this.socket.io.disconnect();
+      }
    }
    
    send(channel: string, payload: any) {

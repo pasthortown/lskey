@@ -23,6 +23,8 @@ export class HomePage implements OnInit {
   screen_height = 0;
   image_width = 0;
   image_height = 0;
+  ip_server = "192.168.1.23";
+  connected = false;
 
   constructor(private speechRecognition: SpeechRecognition, private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
@@ -47,7 +49,7 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.start_realtime_communication();
+    
   }
 
   ngOnDestroy() {
@@ -82,13 +84,15 @@ export class HomePage implements OnInit {
   }
 
   start_realtime_communication() {
-    this.communicationDataService.connect();
+    this.communicationDataService.disconnect();
+    this.communicationDataService.connect(this.ip_server);
     this.communicationDataService.listen('screen').subscribe( r => {
       const response = JSON.parse(r);
       this.image_data =  "data:image/png;base64," + response.data;
       this.screen_width = response.width;
       this.screen_height = response.height;
     });
+    this.connected = true;
   }
 
   shitch_mouse() {
@@ -163,6 +167,16 @@ export class HomePage implements OnInit {
 
   sendData(payload) {
     this.communicationDataService.send('message', payload);
+  }
+
+  scroll(direction) {
+    let message = {
+      type: "scroll", 
+      order: {
+        direction: direction
+      }};
+    let payload = {to: "message", message: message}; 
+    this.sendData(payload);
   }
 
   send_mouse_order(buttons, x, y) {
