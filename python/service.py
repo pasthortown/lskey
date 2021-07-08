@@ -1,18 +1,35 @@
-from flask import Flask, jsonify
-from flask_socketio import SocketIO, emit
-import base64
-import simplejson as json
-import time
+import numpy as np
+from flask import render_template, request, Response, Flask
 import pyautogui
 import pyperclip
+import threading
+import cv2
+import base64
+from mss import mss
+import ctypes
+import simplejson as json
+from flask_cors import CORS
 
+frame = None  
+my_jpeg = None  
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'mysecret'
-socketio = SocketIO(app, cors_allowed_origins="*")
+CORS(app)
 
-@socketio.on('message')
-def handle_message(msg):
-    process_message(msg["message"])
+def get_frame():
+    global frame, my_jpeg
+    with mss() as sct:
+        mon = sct.monitors[1]
+        while True:
+            img = sct.grab(mon)
+            frame = np.array(img)
+            ret, jpeg = cv2.imencode('.jpg', frame)
+            my_jpeg = jpeg.tobytes()
+
+def gen():
+    while True:
+        if not(my_jpeg is None):
+            yield (b'--frame\r\n'
+               b'Content-Type: image/jpeg\r\n\r\n' + my_jpeg + b'\r\n\r\n')
 
 def process_message(msg):
     order_type = msg["type"] 
@@ -28,8 +45,6 @@ def process_message(msg):
         text = msg["order"]
         pyperclip.copy(text)
         pyautogui.hotkey('ctrl','v')
-    if order_type == "screen":
-        screen_capture()
     if order_type == "keyboard":
         keys = msg["order"]
         combination = msg["combination"]
@@ -61,12 +76,29 @@ def send_keyboard(keys, combination):
         for key in keys:
             pyautogui.press(key)
 
-def screen_capture():
-    screenshot = pyautogui.screenshot("d:\\lskey_temp\\screen.png")
-    with open("d:\\lskey_temp\\screen.png", "rb") as img_file:
-        encoded_string = base64.b64encode(img_file.read())
-        screen_size = pyautogui.size()
-        socketio.emit('screen', json.dumps({'width': screen_size[0],'height': screen_size[1], 'data': encoded_string}))
+@app.route('/message', methods=['POST'])
+def handle_message():
+    msg = request.get_json(force=True)
+    process_message(msg['message'])
+    return json.dumps({'response': 'ok'})
+
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/screen_size')
+def alive():
+    screen_size = pyautogui.size()
+    return json.dumps({'width': screen_size[0],'height': screen_size[1]})
+
+@app.route('/video_feed')
+def video_feed():
+    return Response(gen(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    socketio.run(app, host = '0.0.0.0', port=6400)
+    # ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0 )
+    video = threading.Thread(target=get_frame)
+    video.start()
+    web = threading.Thread(target=app.run(host='0.0.0.0', debug=False, port=8080))
+    web.start()
+    

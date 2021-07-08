@@ -16,18 +16,24 @@ export class HomePage implements OnInit {
   mic_on = false;
   click_lock = false;
   
-  image_data = "";
+  image_data = null;
   pos_x = 0;
   pos_y = 0;
   screen_width = 0;
   screen_height = 0;
   image_width = 0;
   image_height = 0;
-  ip_server = "192.168.1.23";
+  ip_server = "192.168.100.15";
   connected = false;
   scrolling = false;
 
-  constructor(private speechRecognition: SpeechRecognition, private communicationDataService: CommunicationService, private screenOrientation: ScreenOrientation) {
+  url = 'http://' + this.ip_server + ':8080/';
+
+  constructor(
+    private speechRecognition: SpeechRecognition, 
+    private communicationDataService: CommunicationService, 
+    private screenOrientation: ScreenOrientation
+    ) {
     this.screenOrientation.lock(this.screenOrientation.ORIENTATIONS.PORTRAIT);
     this.checkPermission();
   }
@@ -50,11 +56,33 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    
   }
 
   ngOnDestroy() {
-    this.communicationDataService.disconnect();
+  }
+
+  check_alive() {
+    if (this.connected) {
+      this.communicationDataService.get_screen_size(this.url).then( r => {
+        this.screen_width = r.width;
+        this.screen_height = r.height;
+        this.connected = true;
+        setTimeout(() => {
+          this.check_alive();
+        }, 1000);
+      }).catch( e => {
+        this.connected = false;
+      });
+    }
+  }
+
+  stop_realtime_communication() {
+    this.connected = false;
+  }
+
+  start_realtime_communication() {
+    this.connected = true;
+    this.check_alive();
   }
 
   start_listening() {
@@ -82,38 +110,6 @@ export class HomePage implements OnInit {
   change_mic() {
     this.mic_on = !this.mic_on;
     this.start_listening();
-  }
-
-  start_realtime_communication() {
-    this.communicationDataService.disconnect();
-    this.communicationDataService.connect(this.ip_server);
-    this.communicationDataService.listen('screen').subscribe( r => {
-      const response = JSON.parse(r);
-      this.image_data =  "data:image/png;base64," + response.data;
-      this.screen_width = response.width;
-      this.screen_height = response.height;
-    });
-    this.connected = true;
-  }
-
-  shitch_mouse() {
-    this.show_mouse = !this.show_mouse;
-    if (this.show_mouse) {
-      this.request_screen();
-    }
-  }
-
-  request_screen() {
-    if (this.show_mouse) {
-      let message = {
-        type: "screen"
-      };
-      let payload = {to: "message", message: message}; 
-      this.sendData(payload);
-      setTimeout(() => {
-        this.request_screen();
-      }, 2000);
-    }
   }
 
   movedTouch(event) {
@@ -167,7 +163,8 @@ export class HomePage implements OnInit {
   }
 
   sendData(payload) {
-    this.communicationDataService.send('message', payload);
+    this.communicationDataService.send(this.url + "message", payload).then(r => {
+    }).catch( e => { console.log(e); });
   }
 
   scroll(direction, start) {
@@ -176,11 +173,10 @@ export class HomePage implements OnInit {
     }
     let message = {
       type: "scroll", 
-      order: {
+      order: { 
         direction: direction
       }};
-    let payload = {to: "message", message: message}; 
-    this.sendData(payload);
+    this.sendData(message);
     if (this.scrolling) {
       setTimeout(() => {
         this.scroll(direction, false)
@@ -195,9 +191,9 @@ export class HomePage implements OnInit {
         buttons: buttons, 
         x:x, 
         y:y
-      }};
-    let payload = {to: "message", message: message}; 
-    this.sendData(payload);
+      }
+    };
+    this.sendData(message);
   }
 
   send_text(text) {
@@ -205,8 +201,7 @@ export class HomePage implements OnInit {
       type: "keyboard_special", 
       order: text,
       combination: false};
-    let payload = {to: "message", message: message}; 
-    this.sendData(payload);
+    this.sendData(message);
   }
 
   send_key_sequence(order) {
@@ -214,8 +209,7 @@ export class HomePage implements OnInit {
       type: "keyboard", 
       order: order,
       combination: false};
-    let payload = {to: "message", message: message}; 
-    this.sendData(payload);
+    this.sendData(message);
   }
 
   send_key_combination(order) {
@@ -223,7 +217,6 @@ export class HomePage implements OnInit {
       type: "keyboard", 
       order: order,
       combination: true};
-    let payload = {to: "message", message: message}; 
-    this.sendData(payload);
+    this.sendData(message);
   }
 }

@@ -8,8 +8,11 @@
         </ion-item>
       </ion-col>
       <ion-col size="2">
-        <ion-button [disabled]="ip_server == ''" expand="full" color="success" size="large" (click)="start_realtime_communication()">
-          <i class="fas fa-sync-alt"></i>
+        <ion-button *ngIf="!connected" [disabled]="ip_server == ''" expand="full" color="success" size="large" (click)="start_realtime_communication()">
+          <i class="fas fa-link"></i>
+        </ion-button>
+        <ion-button *ngIf="connected" expand="full" color="success" size="large" (click)="stop_realtime_communication()">
+          <i class="fas fa-unlink"></i>
         </ion-button>
       </ion-col>
     </ion-row>
@@ -93,20 +96,20 @@
       </ion-col>
     </ion-row>
     <ion-row style="text-align: center;" style="margin-top: -15px;">
-      <ion-col size="12">
-        <ion-button [disabled]="!connected" expand="full" color="secondary" size="large" (click)="shitch_mouse()">
+      <ion-col size="10">
+        <ion-button [disabled]="!connected" expand="full" color="secondary" size="large" (click)="show_mouse=!show_mouse">
           <i class="fas fa-mouse" *ngIf="!show_mouse"></i>
           <i class="fas fa-keyboard" *ngIf="show_mouse"></i>
         </ion-button>
       </ion-col>
-      <!-- <ion-col size="2">
+      <ion-col size="2">
         <ion-button [disabled]="!connected" expand="full" color="success" size="large" *ngIf="mic_on" (click)="change_mic()">
           <i class="fas fa-microphone"></i>
         </ion-button>
         <ion-button [disabled]="!connected" expand="full" color="danger" size="large" *ngIf="!mic_on" (click)="change_mic()">
           <i class="fas fa-microphone-slash" ></i>
         </ion-button>
-      </ion-col> -->
+      </ion-col>
     </ion-row>
   </ion-grid>
   <ion-grid *ngIf="!show_mouse" style="margin-top: -15px;">
@@ -203,7 +206,7 @@
     <ion-row style="text-align: center;" style="margin-top: -15px;">
       <ion-col>
         <img #screen_capture
-          [src]="image_data" 
+          [src]="url + '/video_feed'"
           style="width: 100%; height: auto;"
           (mousedown)="pixelSelected($event)" 
           (touchstart)="movedTouch($event)" 

@@ -1,36 +1,28 @@
 import { Injectable } from '@angular/core';
-import * as io from 'socket.io-client';
-import { Observable } from 'rxjs';
+import { HTTP } from '@ionic-native/http/ngx';
 
 @Injectable({
    providedIn: 'root'
 })
 export class CommunicationService {
+   options = null;
 
-   private socket = null;
-
-   constructor() {
-   }
-
-   connect(ip_server) {
-      this.socket = io.connect('http://' + ip_server + ':6400/');
-   }
-
-   disconnect() {
-      if (this.socket != null) {
-         this.socket.io.disconnect();
-      }
+   constructor(private http: HTTP) {
+      this.http.setDataSerializer('json');
+      this.http.setServerTrustMode('nocheck');
+      this.options = {"Content-Type": "application/json"};
    }
    
-   send(channel: string, payload: any) {
-      this.socket.emit(channel, payload);
+   send(url: string, message_content: any): Promise<any> {
+      const to_send = {message: message_content};
+      return this.http.post(url, to_send, this.options).then( r => {
+         return JSON.parse(r.data);
+      }).catch( e => {console. log(e); });
    }
 
-   listen(channel: string): Observable<any> {
-      return Observable.create((observer) => {
-         this.socket.on(channel, (response) => {
-            observer.next(response);
-         });
-      });
+   get_screen_size(url: string): Promise<any> {
+      return this.http.get(url + 'screen_size',{},this.options).then( r => {
+         return JSON.parse(r.data);
+      }).catch( e => {console. log(e); });
    }
 }
