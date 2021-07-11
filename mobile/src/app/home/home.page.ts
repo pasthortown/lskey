@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
   connected = false;
   scrolling = false;
 
-  url = 'http://' + this.ip_server + ':8080/';
+  url = '';
 
   constructor(
     private speechRecognition: SpeechRecognition, 
@@ -62,6 +62,7 @@ export class HomePage implements OnInit {
   }
 
   check_alive() {
+    this.url = 'http://' + this.ip_server + ':8080/';
     if (this.connected) {
       this.communicationDataService.get_screen_size(this.url).then( r => {
         this.screen_width = r.width;
@@ -71,6 +72,7 @@ export class HomePage implements OnInit {
           this.check_alive();
         }, 1000);
       }).catch( e => {
+        alert(JSON.stringify(e));
         this.connected = false;
       });
     }

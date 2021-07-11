@@ -96,7 +96,7 @@ def video_feed():
     return Response(gen(),mimetype='multipart/x-mixed-replace; boundary=frame')
 
 if __name__ == '__main__':
-    # ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0 )
+    ctypes.windll.user32.ShowWindow( ctypes.windll.kernel32.GetConsoleWindow(), 0 )
     video = threading.Thread(target=get_frame)
     video.start()
     web = threading.Thread(target=app.run(host='0.0.0.0', debug=False, port=8080))
